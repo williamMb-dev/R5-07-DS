@@ -8,7 +8,7 @@ public class Q5
 		{
 			for (int j = i; j >= 1; j--)
 			{
-				System.out.print(j + " ");
+				System.out.print("x ");
 			}
 
 			System.out.println();
