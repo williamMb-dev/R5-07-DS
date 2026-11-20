@@ -1,0 +1,29 @@
+name: Q1 - Archive XYZ
+
+on:
+  push:
+    paths:
+      - 'XYZ.txt'
+      - '.github/workflows/Q1.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Recuperer le depot
+        uses: actions/checkout@v4
+
+      - name: Copier XYZ
+        run: cp XYZ.txt Q1_archive_XYZ.txt
+
+      - name: Envoyer le fichier
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Q1_archive_XYZ.txt
+          git diff --cached --quiet || (git commit -m "Archive Q1" && git push)
