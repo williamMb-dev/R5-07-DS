@@ -1,0 +1,34 @@
+name: Q4 - Archive datee
+
+on:
+  push:
+    paths:
+      - 'Q4.java'
+      - '.github/workflows/Q4.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Recuperer le depot
+        uses: actions/checkout@v4
+
+      - name: Creer archive datee
+        run: |
+          DATE=$(date +%d-%m-%Y)
+          FICHIER="Q4_archive_${DATE}.txt"
+
+          echo "NOM PRENOM" > "$FICHIER"
+          cat Q4.java >> "$FICHIER"
+
+      - name: Envoyer archive
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Q4_archive_*.txt
+          git diff --cached --quiet || (git commit -m "Archive Q4" && git push)
